@@ -10,8 +10,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static java.nio.file.Files.newBufferedReader;
-
 public class FileHandler {
 
     public BufferedReader readFile(String filePath) {
