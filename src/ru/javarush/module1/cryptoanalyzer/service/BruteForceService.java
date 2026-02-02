@@ -33,6 +33,20 @@ public class BruteForceService extends CaesarCipherService {
         }
     }
 
+    public int findBestKey(String text) {
+        int bestKey = 0;
+        int maxScore = -1;
+        for (int i = 0; i < getAlphabetSize(); i++) {
+            String word = processLine(text, -i);
+            int score = getScore(word);
+            if (score > maxScore) {
+                maxScore = score;
+                bestKey = i;
+            }
+        }
+        return bestKey;
+    }
+
     private int getScore(String text) {
         int score = 0;
         if (text.contains(",")) score += 10;
@@ -48,20 +62,6 @@ public class BruteForceService extends CaesarCipherService {
             }
         }
         return score;
-    }
-
-    public int findBestKey(String text) {
-        int bestKey = 0;
-        int maxScore = -1;
-        for (int i = 0; i < getAlphabetSize(); i++) {
-            String word = processLine(text, -i);
-            int score = getScore(word);
-            if (score > maxScore) {
-                maxScore = score;
-                bestKey = i;
-            }
-        }
-        return bestKey;
     }
 }
 

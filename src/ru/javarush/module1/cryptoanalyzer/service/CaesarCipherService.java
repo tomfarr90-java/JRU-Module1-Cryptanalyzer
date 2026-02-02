@@ -7,15 +7,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-public class CaesarCipherService extends CipherService {
-
-    private Alphabet alphabet;
-
-    public FileHandler getFileHandler() {
-        return fileHandler;
-    }
-
-    private FileHandler fileHandler;
+public class CaesarCipherService extends AbstractCipherService {
+    private final Alphabet alphabet;
+    private final FileHandler fileHandler;
 
     public CaesarCipherService(Alphabet alphabet, FileHandler fileHandler) {
         this.alphabet = alphabet;

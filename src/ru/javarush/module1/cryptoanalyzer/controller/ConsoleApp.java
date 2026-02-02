@@ -1,6 +1,6 @@
 package ru.javarush.module1.cryptoanalyzer.controller;
 
-import ru.javarush.module1.cryptoanalyzer.exception.AppException;
+import ru.javarush.module1.cryptoanalyzer.exception.AnalyzerException;
 import ru.javarush.module1.cryptoanalyzer.repository.FileHandler;
 import ru.javarush.module1.cryptoanalyzer.service.BruteForceService;
 import ru.javarush.module1.cryptoanalyzer.service.CaesarCipherService;
@@ -13,12 +13,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class ConsoleApp {
-    private FileHandler fileHandler;
-    private CaesarCipherService caesarCipherService;
-    private Validator validator;
-    private Scanner scanner;
-    private BruteForceService bruteForceService;
-    private StatisticalAnalyzerService service;
+    private final FileHandler fileHandler;
+    private final CaesarCipherService caesarCipherService;
+    private final Validator validator;
+    private final Scanner scanner;
+    private final BruteForceService bruteForceService;
+    private final StatisticalAnalyzerService service;
 
     public ConsoleApp(FileHandler fileHandler, CaesarCipherService caesarCipherService, Validator validator, Scanner scanner, BruteForceService bService, StatisticalAnalyzerService service) {
         this.fileHandler = fileHandler;
@@ -53,34 +53,6 @@ public class ConsoleApp {
             }
         }
     }
-
-    private void processFileWithStatisticalAnalyze() {
-        try {
-            System.out.println("----Взлома файла методом статистического анализа----");
-            System.out.println("Введите путь зашифрованного файла:");
-            System.out.println("Формат для Windows например C:\\users\\ваша учетка\\in.txt");
-            System.out.println("Формат для Unix/Linux например /home/ваша учетка/in.txt");
-            String inputPath = scanner.nextLine();
-            validator.validateInputFile(inputPath);
-
-            System.out.println("Введите путь куда сохранить расшифрованный файл: ");
-            System.out.println("Формат для Windows например C:\\users\\ваша учетка\\in.txt");
-            System.out.println("Формат для Unix/Linux например /home/ваша учетка/in.txt");
-            String outputPath = scanner.nextLine();
-            validator.validateFilePath(outputPath);
-
-            try (BufferedReader reader = fileHandler.readFile(inputPath);
-                 BufferedWriter writer = fileHandler.writeFile(outputPath)) {
-                service.processFile(reader, writer, 0);
-                System.out.println("Операция успешно завершена.");
-            }
-        } catch (IOException e) {
-            System.out.println("Ошибка ввода-вывода " + e);
-        } catch (AppException e) {
-            System.out.println("Ошибка приложения " + e.getMessage());
-        }
-    }
-
 
     public void runCaesarMenu() {
         System.out.println("Меню для выбора Шифр Цезаря!");
@@ -123,7 +95,7 @@ public class ConsoleApp {
             System.out.println("Введите ключ для сдвига позиции: ");
             String keyString = scanner.nextLine();
 
-            int key = validator.validateKey(keyString, caesarCipherService.getAlphabetSize());
+            int key = validator.validateKey(keyString);
             int finalKey = isEncrypt ? key : -key;
 
             try (BufferedReader reader = fileHandler.readFile(inputPath);
@@ -161,8 +133,35 @@ public class ConsoleApp {
             }
         } catch (IOException e) {
             System.out.println("Ошибка при обработке файла" + e.getMessage());
-        } catch (AppException e) {
+        } catch (AnalyzerException e) {
             System.out.println("Введен не корректный путь:");
+        }
+    }
+
+    private void processFileWithStatisticalAnalyze() {
+        try {
+            System.out.println("----Взлома файла методом статистического анализа----");
+            System.out.println("Введите путь зашифрованного файла:");
+            System.out.println("Формат для Windows например C:\\users\\ваша учетка\\in.txt");
+            System.out.println("Формат для Unix/Linux например /home/ваша учетка/in.txt");
+            String inputPath = scanner.nextLine();
+            validator.validateInputFile(inputPath);
+
+            System.out.println("Введите путь куда сохранить расшифрованный файл: ");
+            System.out.println("Формат для Windows например C:\\users\\ваша учетка\\in.txt");
+            System.out.println("Формат для Unix/Linux например /home/ваша учетка/in.txt");
+            String outputPath = scanner.nextLine();
+            validator.validateFilePath(outputPath);
+
+            try (BufferedReader reader = fileHandler.readFile(inputPath);
+                 BufferedWriter writer = fileHandler.writeFile(outputPath)) {
+                service.processFile(reader, writer, 0);
+                System.out.println("Операция успешно завершена.");
+            }
+        } catch (IOException e) {
+            System.out.println("Ошибка ввода-вывода " + e);
+        } catch (AnalyzerException e) {
+            System.out.println("Ошибка приложения " + e.getMessage());
         }
     }
 }

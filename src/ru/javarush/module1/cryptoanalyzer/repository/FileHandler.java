@@ -1,6 +1,6 @@
 package ru.javarush.module1.cryptoanalyzer.repository;
 
-import ru.javarush.module1.cryptoanalyzer.exception.AppException;
+import ru.javarush.module1.cryptoanalyzer.exception.AnalyzerException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,10 +17,10 @@ public class FileHandler {
             Path path = Path.of(filePath);
             return Files.newBufferedReader(path, StandardCharsets.UTF_8);
         } catch (MalformedInputException e) {
-            throw new AppException("Файл закодирован в кодировке отличной от UTF-8" + filePath);
+            throw new AnalyzerException("Файл закодирован в кодировке отличной от UTF-8" + filePath);
         }
         catch (IOException e) {
-            throw new AppException("Невозможно прочитать файл" + filePath,e);
+            throw new AnalyzerException("Невозможно прочитать файл" + filePath, e);
         }
     }
 

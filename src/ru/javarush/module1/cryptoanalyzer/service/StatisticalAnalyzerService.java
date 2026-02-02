@@ -15,38 +15,6 @@ public class StatisticalAnalyzerService extends CaesarCipherService {
         super(alphabet, fileHandler);
     }
 
-    public int findBestKey(String encryptedText) {
-        int bestKey = 0;
-        int maxScore = -1;
-        for (int key = 0; key < getAlphabet().getSize(); key++) {
-            String attempt = processLine(encryptedText, -key);
-            int currentScore = getPopularScore(attempt);
-            if (currentScore > maxScore) {
-                maxScore = currentScore;
-                bestKey = key;
-            }
-        }
-        return bestKey;
-    }
-
-    private int getPopularScore(String text) {
-        int score = 0;
-        String lowerText = text.toLowerCase();
-        score += countChar(lowerText, ' '); // Пробел — лучший маркер
-        score += countChar(lowerText, 'о');
-        score += countChar(lowerText, 'е');
-        score += countChar(lowerText, 'а');
-        return score;
-    }
-
-    private int countChar(String text, char target) {
-        int count = 0;
-        for (char c : text.toCharArray()) {
-            if (c == target) count++;
-        }
-        return count;
-    }
-
     @Override
     public void processFile(BufferedReader reader, BufferedWriter writer, int key) throws IOException {
         StringBuilder builder = new StringBuilder();
@@ -68,6 +36,38 @@ public class StatisticalAnalyzerService extends CaesarCipherService {
             writer.write(processLine(line, -bestKey));
             writer.newLine();
         }
+    }
+
+    public int findBestKey(String encryptedText) {
+        int bestKey = 0;
+        int maxScore = -1;
+        for (int key = 0; key < getAlphabet().getSize(); key++) {
+            String attempt = processLine(encryptedText, -key);
+            int currentScore = getPopularScore(attempt);
+            if (currentScore > maxScore) {
+                maxScore = currentScore;
+                bestKey = key;
+            }
+        }
+        return bestKey;
+    }
+
+    private int getPopularScore(String text) {
+        int score = 0;
+        String lowerText = text.toLowerCase();
+        score += countChar(lowerText, ' ');
+        score += countChar(lowerText, 'о');
+        score += countChar(lowerText, 'е');
+        score += countChar(lowerText, 'а');
+        return score;
+    }
+
+    private int countChar(String text, char target) {
+        int count = 0;
+        for (char c : text.toCharArray()) {
+            if (c == target) count++;
+        }
+        return count;
     }
 }
 

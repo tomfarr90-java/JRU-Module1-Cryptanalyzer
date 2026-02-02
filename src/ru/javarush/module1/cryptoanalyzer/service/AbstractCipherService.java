@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-public abstract class CipherService {
+public abstract class AbstractCipherService {
 
     public abstract String processLine(String line, int key);
 
