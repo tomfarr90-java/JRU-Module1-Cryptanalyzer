@@ -12,20 +12,18 @@ import java.util.Scanner;
 public class AppConfigurator {
     public static void startApp() {
         Alphabet alphabet = new Alphabet();
-        FileHandler fileHandler = new FileHandler();
-
-        ConsoleApp app = buildApp(alphabet, fileHandler);
+        ConsoleApp app = buildApp(alphabet);
         app.run();
     }
 
-    private static ConsoleApp buildApp(Alphabet alphabet, FileHandler fileHandler) {
+    private static ConsoleApp buildApp(Alphabet alphabet) {
         return new ConsoleApp(
-                fileHandler,
+                new FileHandler(),
                 new CaesarCipherService(alphabet),
                 new Validator(),
                 new Scanner(System.in),
                 new BruteForceService(alphabet),
-                new StatisticalAnalyzerService(alphabet, fileHandler)
+                new StatisticalAnalyzerService(alphabet)
         );
     }
 }

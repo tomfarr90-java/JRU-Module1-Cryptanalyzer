@@ -11,8 +11,8 @@ import java.util.List;
 
 public class StatisticalAnalyzerService extends CaesarCipherService {
 
-    public StatisticalAnalyzerService(Alphabet alphabet, FileHandler fileHandler) {
-        super(alphabet, fileHandler);
+    public StatisticalAnalyzerService(Alphabet alphabet) {
+        super(alphabet);
     }
 
     @Override
