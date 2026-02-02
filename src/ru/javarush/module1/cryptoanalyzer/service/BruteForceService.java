@@ -9,8 +9,8 @@ import java.io.IOException;
 
 public class BruteForceService extends CaesarCipherService {
 
-    public BruteForceService(Alphabet alphabet, FileHandler fileHandler) {
-        super(alphabet, fileHandler);
+    public BruteForceService(Alphabet alphabet) {
+        super(alphabet);
     }
 
     @Override

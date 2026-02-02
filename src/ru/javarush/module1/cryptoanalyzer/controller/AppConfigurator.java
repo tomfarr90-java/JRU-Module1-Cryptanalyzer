@@ -21,10 +21,10 @@ public class AppConfigurator {
     private static ConsoleApp buildApp(Alphabet alphabet, FileHandler fileHandler) {
         return new ConsoleApp(
                 fileHandler,
-                new CaesarCipherService(alphabet, fileHandler),
+                new CaesarCipherService(alphabet),
                 new Validator(),
                 new Scanner(System.in),
-                new BruteForceService(alphabet, fileHandler),
+                new BruteForceService(alphabet),
                 new StatisticalAnalyzerService(alphabet, fileHandler)
         );
     }
