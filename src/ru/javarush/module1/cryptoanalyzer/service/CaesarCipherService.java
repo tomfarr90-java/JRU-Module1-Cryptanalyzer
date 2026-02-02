@@ -9,11 +9,11 @@ import java.io.IOException;
 
 public class CaesarCipherService extends AbstractCipherService {
     private final Alphabet alphabet;
-    private final FileHandler fileHandler;
+
 
     public CaesarCipherService(Alphabet alphabet, FileHandler fileHandler) {
         this.alphabet = alphabet;
-        this.fileHandler = fileHandler;
+
     }
 
     @Override
